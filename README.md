@@ -1,6 +1,6 @@
 # tiny-shop
 
-An ecommerce frontend and backend built with Servant.
+An ecommerce frontend and backend built with servant and blaze-html.
 
 # Installing
 
