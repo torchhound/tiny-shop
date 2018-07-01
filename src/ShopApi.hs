@@ -26,6 +26,8 @@ type ShopApi = "add" :> ReqBody '[JSON] Item :> Put '[JSON] (Maybe (Key Item))
   :<|> "modify" :> ReqBody '[JSON] Item :> Patch '[JSON] [Char]
   :<|> "remove" :> Capture "id" Int64 :> Delete '[JSON] [Char]
   :<|> "all" :> Get '[JSON] ([Item])
+
+type ViewApi = ShopApi
   :<|> "home" :> Get '[HTML] H.Html
   -- :<|> "catalog" :> Get '[HTML] H.Html
   -- :<|> "item" :> Get '[HTML] H.Html
@@ -35,12 +37,15 @@ type ShopApi = "add" :> ReqBody '[JSON] Item :> Put '[JSON] (Maybe (Key Item))
 
 shopApi :: Proxy ShopApi
 shopApi = Proxy
-{-
+
+viewApi :: Proxy ViewApi
+viewApi = Proxy
+
 apiToJs :: Text
 apiToJs = jsForAPI shopApi jquery
 
-writeJSFiles :: IO ()
-writeJSFiles = do
+writeJsFiles :: IO ()
+writeJsFiles = do
   T.writeFile "static/api.js" apiToJs
   jq <- T.readFile =<< Language.Javascript.JQuery.file
-  T.writeFile "static/jq.js" jq-}
+  T.writeFile "static/jq.js" jq

@@ -31,7 +31,6 @@ server pool = _itemPost
   :<|> _itemPatch 
   :<|> _itemDelete
   :<|> _itemAll
-  :<|> return V.home
 
   where
     _itemPost newItem = liftIO $ itemPost newItem
@@ -68,8 +67,12 @@ server pool = _itemPost
       _Items <- selectList ([] :: [Filter Item]) []
       return $ entityVal <$> _Items
 
+server' :: ConnectionPool -> Server ViewApi
+server' pool = server pool
+  :<|> return V.home
+
 app :: ConnectionPool -> Application
-app pool = serve shopApi $ server pool
+app pool = serve viewApi $ server' pool
 
 mkApp :: FilePath -> IO Application
 mkApp file = do
@@ -82,4 +85,6 @@ sprint :: FilePath -> IO ()
 sprint file = Warp.run 8081 =<< mkApp file
 
 main :: IO ()
-main = sprint "sqlite.db"
+main = do
+  writeJsFiles
+  sprint "sqlite.db"
