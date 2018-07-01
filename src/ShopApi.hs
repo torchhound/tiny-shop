@@ -29,11 +29,11 @@ type ShopApi = "add" :> ReqBody '[JSON] Item :> Put '[JSON] (Maybe (Key Item))
 
 type ViewApi = ShopApi
   :<|> "home" :> Get '[HTML] H.Html
-  -- :<|> "catalog" :> Get '[HTML] H.Html
-  -- :<|> "item" :> Get '[HTML] H.Html
-  -- :<|> "cart" :> Get '[HTML] H.Html
-  -- :<|> "checkout" :> Get '[HTML] H.Html
-  -- :<|> "dashboard" :> Get '[HTML] H.Html
+  :<|> "catalog" :> Get '[HTML] H.Html
+  :<|> "item" :> Get '[HTML] H.Html
+  :<|> "cart" :> Get '[HTML] H.Html
+  :<|> "checkout" :> Get '[HTML] H.Html
+  :<|> "dashboard" :> Get '[HTML] H.Html
 
 shopApi :: Proxy ShopApi
 shopApi = Proxy

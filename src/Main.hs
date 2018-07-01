@@ -70,6 +70,11 @@ server pool = _itemPost
 server' :: ConnectionPool -> Server ViewApi
 server' pool = server pool
   :<|> return V.home
+  :<|> return V.catalog
+  :<|> return V.item
+  :<|> return V.cart
+  :<|> return V.checkout
+  :<|> return V.dashboard
 
 app :: ConnectionPool -> Application
 app pool = serve viewApi $ server' pool
